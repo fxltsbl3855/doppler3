@@ -1,0 +1,63 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.sinoservices</groupId>
+    <artifactId>doppler3-stat-server</artifactId>
+    <version>3.0</version>
+
+    <properties>
+        <mybatis_spring.version>1.0.0</mybatis_spring.version>
+        <doppler3_facade.version>3.0</doppler3_facade.version>
+        <dubbo.version>2.8.1</dubbo.version>
+        <spring.version>4.0.2.RELEASE</spring.version>
+        <druid.version>0.2.7</druid.version>
+        <mysql-connector-java.version>5.1.22</mysql-connector-java.version>
+        <zkclient.version>0.4</zkclient.version>
+        <log4j.version>1.2.16</log4j.version>
+        <slf4j_version>1.6.2</slf4j_version>
+        <logback_version>1.0.6</logback_version>
+        <gson_version>2.1</gson_version>
+        <gson_version>2.1</gson_version>
+        <metrics_version>3.0.1</metrics_version>
+        <sinoservices_common>1.0</sinoservices_common>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>ch.qos.logback</groupId>
+            <artifactId>logback-classic</artifactId>
+            <version>${logback_version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j_version}</version>
+        </dependency>
+        <dependency>
+            <groupId>aopalliance</groupId>
+            <artifactId>aopalliance</artifactId>
+            <version>1.0</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework</groupId>
+            <artifactId>spring-context</artifactId>
+            <version>4.0.2.RELEASE</version>
+        </dependency>
+        <dependency>
+            <groupId>org.aspectj</groupId>
+            <artifactId>aspectjweaver</artifactId>
+            <version>1.6.0</version>
+        </dependency>
+    </dependencies>
+    <!-- 配置远程发布到私服，mvn deploy -->
+    <distributionManagement>
+        <repository>
+            <id>thirdparty</id>
+            <url>http://192.168.0.109:8081/nexus/content/repositories/thirdparty/</url>
+        </repository>
+    </distributionManagement>
+
+</project>

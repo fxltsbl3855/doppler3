@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>com.sinoservices</groupId>
+    <artifactId>doppler3-stat-web</artifactId>
+    <version>3.1</version>
+    <name>DOPPLER3 STAT WEB</name>
+
+    <properties>
+        <tomcat_version>8.0.11</tomcat_version>
+        <slf4j_version>1.6.2</slf4j_version>
+        <sinoservices_common>1.0</sinoservices_common>
+    </properties>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.sinoservices</groupId>
+            <artifactId>sinoservices-common</artifactId>
+            <version>${sinoservices_common}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.tomcat.embed</groupId>
+            <artifactId>tomcat-embed-core</artifactId>
+            <version>${tomcat_version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-api</artifactId>
+            <version>${slf4j_version}</version>
+        </dependency>
+    </dependencies>
+    <!-- 配置远程发布到私服，mvn deploy -->
+    <distributionManagement>
+        <repository>
+            <id>thirdparty</id>
+            <url>http://192.168.0.109:8081/nexus/content/repositories/thirdparty/</url>
+        </repository>
+    </distributionManagement>
+
+</project>

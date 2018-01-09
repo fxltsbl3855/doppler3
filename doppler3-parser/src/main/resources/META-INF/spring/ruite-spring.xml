@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+ - Copyright 1999-2011 Alibaba Group.
+ -  
+ - Licensed under the Apache License, Version 2.0 (the "License");
+ - you may not use this file except in compliance with the License.
+ - You may obtain a copy of the License at
+ -  
+ -      http://www.apache.org/licenses/LICENSE-2.0
+ -  
+ - Unless required by applicable law or agreed to in writing, software
+ - distributed under the License is distributed on an "AS IS" BASIS,
+ - WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ - See the License for the specific language governing permissions and
+ - limitations under the License.
+-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	   xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+	   xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+	   xmlns:context="http://www.springframework.org/schema/context"
+	   xmlns:util="http://www.springframework.org/schema/util"
+       xsi:schemaLocation="
+     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.0.xsd
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+     http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd
+     http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+	<util:properties id="propertiesReader" location="classpath:config.properties" />
+	<context:component-scan base-package="com.sinoservices.parser"/>
+
+	<!-- 应用属性文件读入-->
+	<bean id="applicationProperties" class="org.springframework.beans.factory.config.PropertiesFactoryBean"
+		  lazy-init="false">
+		<property name="ignoreResourceNotFound" value="true"/>
+		<property name="locations">
+			<list>
+				<value>classpath:config.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- PropertyPlaceholderConfigurer,用于spring ${placeholder}的解析 -->
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer"
+		  lazy-init="false">
+		<property name="systemPropertiesModeName" value="SYSTEM_PROPERTIES_MODE_OVERRIDE"/>
+		<property name="properties" ref="applicationProperties"/>
+	</bean>
+
+	<!-- 用于持有applicationProperties,将properties转变为静态方法使用,PropertiesHolder.getProperty("somekey") -->
+	<bean class="com.sinoservices.parser.config.PropertiesHolder" lazy-init="false">
+		<property name="properties" ref="applicationProperties"/>
+	</bean>
+
+
+	<bean class="com.sinoservices.parser.config.ConfigManager" init-method="init">
+		<property name="configClass">
+			<value>com.sinoservices.parser.config.UpMessageConfig</value>
+		</property>
+	</bean>
+
+	<!-- 日志收集方式：file -->
+    <!--<bean id="fileMonitor" class="com.sinoservices.parser.file.FileMonitor" init-method="start" destroy-method="stopMonitor"/>-->
+	<!-- 日志收集方式：kafka -->
+	<!--<bean id="kafkaWorker" class="com.sinoservices.parser.kafka.KafkaMonitor" init-method="start" destroy-method="stop"/>-->
+	<!-- 日志收集方式：redis -->
+	<bean id="redisWorker" class="com.sinoservices.parser.redis.RedisMonitor" init-method="start" destroy-method="stop"/>
+
+</beans>
